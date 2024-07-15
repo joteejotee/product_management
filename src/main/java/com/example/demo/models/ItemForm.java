@@ -27,7 +27,6 @@ public class ItemForm implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	//あとでitem_を外してみる
 	@NotBlank
 	@Size(max = 10)
 	private String name;
