@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,13 @@ public class RootController {
 	public String form(ItemForm itemForm) { //フレームワークからパラメータにitemFormオブジェクトを受け取る
 		return "item/create";
 	}
+	
+    @GetMapping("/list")
+    public String showItems(Model model) {
+        List<ItemForm> items = repository.findAll();
+        model.addAttribute("items", items);
+        return "item/list";
+    }
 
 	@PostMapping("/create")
 	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model) {

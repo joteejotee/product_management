@@ -38,6 +38,7 @@
 							<ul>
 								<li><a th:href="@{/}">ホーム</a></li>
 								<li><a th:href="@{/create}">商品登録</a></li>
+								<li><a th:href="@{/list}">商品一覧</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -66,13 +67,11 @@
 						<h2 class="underline">商品登録</h2>
 						<form th:action="@{/create}" th:object="${itemForm}" method="post">
 							<p>
-								<label for="name">商品名</label>
+								<label for="name">商品名</label><!-- idがnameのフィールドに、このラベルが関連付けられる。 -->
 								<input class="full-width"
-									type="text" id="name" name="name" maxlength="10"
-									th:field="*{name}">
+									type="text" id="name" name="name" maxlength="10" th:field="*{name}"><!-- このinputタグのIDと名前を指定 -->
 								<span
-									th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-									th:class="msg">
+									th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="msg"><!-- idがnameのフィールドに、このラベルが関連付けられる。 -->
 								</span>
 							</p>
 							<p>
