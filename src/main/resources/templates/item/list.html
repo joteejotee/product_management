@@ -47,52 +47,34 @@
 		</div>
 	</header>
 	<div class="mainimg">
-		<img th:src="@{/img/mainimg.jpg}" alt="メイン画像">
+		<img th:src="@{/img/subimg.jpg}" alt="お問い合わせ画像">
 	</div>
 	<main>
-		<section>
+		<article>
 			<div class="container">
-				<h2 class="catch">Works</h2>
 				<div class="row">
-					<div class="col span-4">
-						<figure>
-							<img th:src="@{/img/catch.jpg}" alt="画像">
-							<figcaption>キャプション</figcaption>
-						</figure>
-					</div>
-					<div class="col span-4">
-						<figure>
-							<img th:src="@{/img/catch.jpg}" alt="画像">
-							<figcaption>キャプション</figcaption>
-						</figure>
-					</div>
-					<div class="col span-4">
-						<figure>
-							<img th:src="@{/img/catch.jpg}" alt="画像">
-							<figcaption>キャプション</figcaption>
-						</figure>
+					<div class="col span-12">
+						<div class="breadcrumb">
+							<ul>
+								<li><a th:href="@{/demo}">ホーム</a> > 商品一覧</li>
+							</ul>
+						</div>
+
+						<th:block th:if="message != null">
+							<h2 th:class="msg" th:text="${message}"></h2>
+						</th:block>
+
+						<h2 class="underline">商品一覧</h2>
+						<!-- itemsはcontrollerのmodel.addAttributeで指定した「名前」 -->
+						<div th:each="item : ${items}">
+						    <p th:text="|商品名: ${item.name}, 価格: ${item.price}, 説明: ${item.description}|"></p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</section>
+		</article>
 	</main>
 	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col span-4">
-					<h5>フッター１</h5>
-					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
-				</div>
-				<div class="col span-4">
-					<h5>フッター２</h5>
-					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
-				</div>
-				<div class="col span-4">
-					<h5>フッター３</h5>
-					<p>ここにSNSやテキストなどが入ります。SNSやテキストなどが入ります。</p>
-				</div>
-			</div>
-		</div>
 	</footer>
 	<p id="pagetop">
 		<a href="#">TOP</a>
