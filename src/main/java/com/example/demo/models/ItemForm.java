@@ -44,4 +44,8 @@ public class ItemForm implements Serializable {
 		price = null;
 		description = null;
 	}
+
+    public Long getId() {
+        return id;
+    }
 }

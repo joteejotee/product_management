@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ポートフォリオサイト</title>
+<title>商品削除確認</title>
 <link rel="stylesheet" media="all" th:href="@{/css/ress.min.css}" />
 <link rel="stylesheet" media="all" th:href="@{/css/style.css}" />
 <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
@@ -11,6 +11,7 @@
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" th:href="@{/img/favicon.png}">
+
 </head>
 <body>
 	<header>
@@ -55,35 +56,22 @@
 					<div class="col span-12">
 						<div class="breadcrumb">
 							<ul>
-								<li><a th:href="@{/demo}">ホーム</a> > 商品一覧</li>
+								<li><a th:href="@{/demo}">ホーム</a> > 商品削除確認</li>
 							</ul>
 						</div>
 
-						<th:block th:if="message != null">
-							<h2 th:class="msg" th:text="${message}"></h2>
-						</th:block>
-
-						<h2 class="underline">商品一覧</h2>
-						<table>
-						    <tr>
-								<th>ID</th>
-						        <th>商品名</th>
-						        <th>価格</th>
-						        <th>説明</th>
-						        <th></th>
-						        <th></th>
-						    </tr>
-							<div th:each="item : ${items}">
-							    <tr>
-							        <td th:text="${item.id}"></td>
-							        <td th:text="${item.name}"></td>
-							        <td th:text="${item.price}"></td>
-							        <td th:text="${item.description}"></td>
-									<td><a th:href="@{'/update/' + ${item.id}}">編集</a></td>
-									<td><a th:href="@{'/delete/' + ${item.id}}">削除</a></td>
-							    </tr>
-							</div>
-						</table>
+						<h2 class="underline">商品削除</h2>
+						<form th:action="@{/delete}" th:object="${itemForm}" method="post">
+							<p>以下の商品を削除しますか？</p>
+                            <p>商品ID: <span th:text="${itemForm.id}"></span></p>
+                            <p>商品名: <span th:text="${itemForm.name}"></span></p>
+                            <p>価格: <span th:text="${itemForm.price}"></span></p>
+                            <p>説明: <span th:text="${itemForm.description}"></span></p>
+                            <input type="hidden" th:field="*{id}" />
+							<p>
+								<input class="button" type="submit" value="削除">
+							</p>
+						</form>
 					</div>
 				</div>
 			</div>
