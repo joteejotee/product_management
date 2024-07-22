@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>商品削除確認</title>
+<title>商品編集</title>
 <link rel="stylesheet" media="all" th:href="@{/css/ress.min.css}" />
 <link rel="stylesheet" media="all" th:href="@{/css/style.css}" />
 <script th:src="@{/js/jquery-2.1.4.min.js}"></script>
@@ -56,22 +56,44 @@
 					<div class="col span-12">
 						<div class="breadcrumb">
 							<ul>
-								<li><a th:href="@{/demo}">ホーム</a> > 商品編集確認</li>
+								<li><a th:href="@{/demo}">ホーム</a> > 更新結果</li>
 							</ul>
 						</div>
 
-						<h2 class="underline">商品編集</h2>
-						<form th:action="@{/update-result}" th:object="${itemForm}" method="post">
-							<p>商品を以下の内容で更新しますか？</p>
-                            <p>商品ID: <span th:text="${itemForm.id}"></span></p>
-                            <p>商品名: <span th:text="${itemForm.name}"></span></p>
-                            <p>価格: <span th:text="${itemForm.price}"></span></p>
-                            <p>説明: <span th:text="${itemForm.description}"></span></p>
-                           <!-- <input type="hidden" th:field="*{id}" />-->
+						<h2 class="underline">商品更新結果</h2>
+						<th:block th:if="message != null">
+							<h2 th:class="msg" th:text="${message}"></h2>
+						</th:block>
+						<!--<form th:action="@{/update}" th:object="${itemForm}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+							<p>
+								<label for="name">商品名</label>
+								<input class="full-width"
+									type="text" id="name" name="name" maxlength="10" th:field="*{name}">
+								<span
+									th:if="${#fields.hasErrors('name')}" th:errors="*{name}" th:class="msg">
+								</span>
+							</p>
+							<p>
+								<label for="price">商品価格</label>
+								<input class="full-width"
+									type="number" id="price" name="price" th:field="*{price}">
+								<span
+									th:if="${#fields.hasErrors('price')}" th:errors="*{price}" th:class="msg">
+								</span>
+							</p>
+							<p>
+								<label for="description">商品説明</label>
+								<textarea class="full-width" id="description" name="description"
+									th:field="*{description}"></textarea>
+								<span th:if="${#fields.hasErrors('description')}"
+									th:errors="*{description}" th:class="msg">
+								</span>
+							</p>
 							<p>
 								<input class="button" type="submit" value="更新">
 							</p>
-						</form>
+						</form>-->
 					</div>
 				</div>
 			</div>

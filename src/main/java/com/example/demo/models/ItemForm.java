@@ -1,7 +1,6 @@
 package com.example.demo.models;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
@@ -27,16 +26,16 @@ public class ItemForm implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@NotBlank
-	@Size(max = 10)
+	@NotBlank(message = "商品名を入力してください。")
+	@Size(max = 20,message = "商品名は20文字以下で入力してください。")
 	private String name;
 
-	@NotNull
+	@NotNull(message = "価格を入力してください。")
 	@PositiveOrZero(message = "価格は0円以上でなければなりません")
 	private Integer price;
 
-	@NotBlank
-	@Size(max = 400)
+	@NotBlank(message = "商品説明を入力してください。")
+	@Size(max = 300,message = "商品説明は300文字以下で入力してください。")
 	private String description;
 
 	public void clear() {
