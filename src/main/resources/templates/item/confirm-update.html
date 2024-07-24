@@ -61,13 +61,18 @@
 						</div>
 
 						<h2 class="underline">商品編集</h2>
-						<form th:action="@{/update-result}" th:object="${itemForm}" method="post">
+						<form th:action="@{/confirm-update}" th:object="${itemForm}" method="post">
 							<p>商品を以下の内容で更新しますか？</p>
                             <p>商品ID: <span th:text="${itemForm.id}"></span></p>
                             <p>商品名: <span th:text="${itemForm.name}"></span></p>
                             <p>価格: <span th:text="${itemForm.price}"></span></p>
                             <p>説明: <span th:text="${itemForm.description}"></span></p>
-                           <!-- <input type="hidden" th:field="*{id}" />-->
+							
+							<!-- 隠しフィールドでデータを送信 -->
+							<input type="hidden" th:field="*{id}" />
+							<input type="hidden" th:field="*{name}" />
+							<input type="hidden" th:field="*{price}" />
+							<input type="hidden" th:field="*{description}" />
 							<p>
 								<input class="button" type="submit" value="更新">
 							</p>
