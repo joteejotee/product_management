@@ -1,5 +1,5 @@
 package com.example.demo.controllers;
-
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.example.demo.models.ItemForm;
 import com.example.demo.repositries.ItemRepository;
@@ -87,34 +88,31 @@ public class RootController {
         return "item/confirm-update";
     }
     
-    //ここから続き。
-	@PostMapping("/update-result")
-	public String updateExecuteAndResult(@Validated ItemForm itemForm, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) { //バリデーションエラーが発生した場合の処理
-			return "redirect:/create";
-		}
-		// RDBと連携できることを確認しておきます。
-		//バリデーションが成功した場合の処理
+    //商品編集確認画面で更新ボタンをクリック
+	@PostMapping("/confirm-update")
+	public String updateExecuteAndResult(ItemForm itemForm, Model model) {	
 		repository.saveAndFlush(itemForm);//このメソッドはitemRepositoyの継承元のJpaRepository（のもっと親）にあるメソッド。
 		itemForm.clear();
-		model.addAttribute("message", "登録が完了しました。");
-		return "redirect:/create";
+		model.addAttribute("message", "更新が完了しました。");
+		
+		//redirectするとデフォルトでhttpになってしまうためhttpsを指定してる
+	    UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
+	    URI location = builder.scheme("https").host("127.0.0.1").path("/list").build().toUri();
+	    return "redirect:" + location.toString();
 	}
 
+    
     @GetMapping("/delete/{id}")
     public String confirmDelete(@PathVariable("id") Long id, Model model) {
         ItemForm item = repository.findById(id).orElse(null);
         model.addAttribute("itemForm", item);
-        model.addAttribute("message", "id " + id + " のレコードの削除がクリックされましたよ");
-        return "item/delete";
+        return "item/confirm-delete";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/confirm-delete")
     public String deleteConfirmed(@ModelAttribute ItemForm itemForm, Model model) {
         repository.deleteById(itemForm.getId());
         model.addAttribute("message", "商品ID " + itemForm.getId() + " のレコードが削除されました");
         return "redirect:/delete";
     }
-	
-	
 }
