@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.demo.models.ItemForm;
+import com.example.demo.forms.ItemForm;
 import com.example.demo.repositries.ItemRepository;
 
 @Controller
@@ -112,7 +112,10 @@ public class RootController {
     @PostMapping("/confirm-delete")
     public String deleteConfirmed(@ModelAttribute ItemForm itemForm, Model model) {
         repository.deleteById(itemForm.getId());
-        model.addAttribute("message", "商品ID " + itemForm.getId() + " のレコードが削除されました");
-        return "redirect:/delete";
+        
+		//redirectするとデフォルトでhttpになってしまうためhttpsを指定してる
+	    UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
+	    URI location = builder.scheme("https").host("127.0.0.1").path("/list").build().toUri();
+	    return "redirect:" + location.toString();
     }
 }

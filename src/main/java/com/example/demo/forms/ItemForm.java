@@ -1,12 +1,10 @@
-package com.example.demo.models;
+package com.example.demo.forms;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
-
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,16 +13,18 @@ import javax.persistence.Table;
 import lombok.Data;
 
 //今回のitemForm.javaはフォームであり、エンティティである。
-@Data //これがついてたらフォーム。
-@Entity //これはテーブルの1レコードの意。@Tableアノテーションとセット。
+@Data //これがついてたらフォーム。これはフォームクラス。
+@Entity //これはテーブルの1レコードの意。@Tableアノテーションとセット。@Entityと@Tableアノテはエンティティクラスに。
 @Table(name = "item") //DBのitemテーブルに紐づいてると明示してる。@TableはDBをJavaクラスで扱えるようにするアノテ。
 public class ItemForm implements Serializable {
 	private static final long serialVersionUID = -6647247658748349084L;
 
-	@Id
+	//ここはエンティティクラスに。
+	@Id//これは主キーのアノテ。
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+	//ここからはフォームクラス。
 	@NotBlank(message = "商品名を入力してください。")
 	@Size(max = 20,message = "商品名は20文字以下で入力してください。")
 	private String name;
