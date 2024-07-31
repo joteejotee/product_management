@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 import java.net.URI;
+import java.security.PublicKey;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,18 @@ public class RootController {
 	@PostMapping("/create")
 	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) { //バリデーションエラーが発生した場合の処理
-			return "redirect:/create";
+			return "item/create";
 		}
 		// RDBと連携できることを確認しておきます。
 		//バリデーションが成功した場合の処理
 		repository.saveAndFlush(itemForm);//このメソッドはitemRepositoyの継承元のJpaRepository（のもっと親）にあるメソッド。
 		itemForm.clear();
 		model.addAttribute("message", "登録が完了しました。");
-		return "redirect:/create";
+		
+		//redirectするとデフォルトでhttpになってしまうためhttpsを指定してる
+	    UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
+	    URI location = builder.scheme("https").host("127.0.0.1").path("/list").build().toUri();
+	    return "redirect:" + location.toString();
 	}
 
 	//グローバルメニューの商品一覧をクリック
