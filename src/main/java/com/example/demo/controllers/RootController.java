@@ -13,18 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.example.demo.forms.ItemForm;
-import com.example.demo.repositries.ItemRepository;
 import com.example.demo.services.ItemService;
 
 @Controller
 @RequestMapping("/")
 public class RootController {
 
-	@Autowired
-	ItemRepository repository;
-
 	private final ItemService itemService;
-
+	
 	public RootController(ItemService itemService) {
 		this.itemService = itemService;
 	}
@@ -44,7 +40,7 @@ public class RootController {
 	}
 
 	@PostMapping("/create")
-	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model, ItemService itemService) {
+	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) { //バリデーションエラーが発生した場合の処理
 			return "item/create";
 		}

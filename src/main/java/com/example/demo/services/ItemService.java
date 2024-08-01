@@ -8,7 +8,7 @@ import com.example.demo.repositries.ItemRepository;
 public class ItemService {
 
 	private final ItemRepository repository;
-
+	
 	public ItemService(ItemRepository repository) {
 		this.repository = repository;
 	}
