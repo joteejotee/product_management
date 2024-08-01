@@ -1,8 +1,6 @@
 package com.example.demo.controllers;
 import java.net.URI;
-import java.security.PublicKey;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,9 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import com.example.demo.forms.ItemForm;
 import com.example.demo.repositries.ItemRepository;
+import com.example.demo.services.ItemService;
 
 @Controller
 @RequestMapping("/")
@@ -24,6 +22,12 @@ public class RootController {
 
 	@Autowired
 	ItemRepository repository;
+	
+	private final ItemService itemService;
+	
+    public RootController(ItemService itemService) {
+        this.itemService = itemService;
+    }
 
 	// /にアクセスした時
 	@GetMapping
@@ -40,13 +44,13 @@ public class RootController {
 	}
 
 	@PostMapping("/create")
-	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model) {
+	public String form(@Validated ItemForm itemForm, BindingResult bindingResult, Model model, ItemService itemService) {
 		if (bindingResult.hasErrors()) { //バリデーションエラーが発生した場合の処理
 			return "item/create";
 		}
 		// RDBと連携できることを確認しておきます。
-		//バリデーションが成功した場合の処理
-		repository.saveAndFlush(itemForm);//このメソッドはitemRepositoyの継承元のJpaRepository（のもっと親）にあるメソッド。
+		//バリデーションが成功した場合の処理-------------------------１個目のサービスへの切り出し成功。
+		itemService.seveCreate(itemForm);
 		itemForm.clear();
 		model.addAttribute("message", "登録が完了しました。");
 		
@@ -56,21 +60,21 @@ public class RootController {
 	    return "redirect:" + location.toString();
 	}
 
-	//グローバルメニューの商品一覧をクリック
+	//グローバルメニューの商品一覧をクリック-----------------２個目のサービスへの切り出し成功。
     @GetMapping("/list")
     public String showItems(Model model) {
-        List<ItemForm> items = repository.findAll();
+    	List<ItemForm> items = itemService.findAllItems();
         model.addAttribute("items", items);
         
         //商品一覧画面を返す
         return "item/list";
     }
     
-    //商品一覧画面で編集リンクをクリック
+    //商品一覧画面で編集リンクをクリック-----------------３個目のサービスへの切り出し成功。
     @GetMapping("/update/{id}")
     public String showUpdate(@PathVariable("id") Long id, Model model) {
         // 商品IDを受け取り、商品情報を取得する
-        ItemForm itemForm = repository.findById(id).orElse(null);
+    	ItemForm itemForm = itemService.findItemById(id);
         model.addAttribute("itemForm", itemForm);
         model.addAttribute("message", "id " + id + " の商品を編集します");
 
