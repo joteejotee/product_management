@@ -77,11 +77,11 @@
 							<div th:each="item : ${items}">
 							    <tr>
 							        <td th:text="${item.id}"></td>
-							        <td th:text="${item.name}"></td>
+							        <td class="list-item-name" th:text="${item.name}"></td>
 							        <td th:text="${item.price}"></td>
-							        <td th:text="${item.description}"></td>
-									<td><a th:href="@{'/update/' + ${item.id}}">編集</a></td>
-									<td><a th:href="@{'/delete/' + ${item.id}}">削除</a></td>
+							        <td class="list-item-descriprion" th:text="${item.description}"></td>
+									<td><a class="table-actions" th:href="@{'/update/' + ${item.id}}">編集</a></td>
+									<td><a class="table-actions" th:href="@{'/delete/' + ${item.id}}">削除</a></td>
 							    </tr>
 							</div>
 						</table>
