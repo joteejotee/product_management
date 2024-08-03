@@ -32,6 +32,4 @@ public class ItemService {
 	public void seveDelete(ItemForm itemForm) {
 		repository.deleteById(itemForm.getId());
 	}
-
-
 }

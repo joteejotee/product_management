@@ -26,7 +26,7 @@ public class ItemForm implements Serializable {
 
 	//ここからはフォームクラス。
 	@NotBlank(message = "商品名を入力してください。")
-	@Size(max = 20,message = "商品名は20文字以下で入力してください。")
+	@Size(max = 10,message = "商品名は20文字以下で入力してください。")
 	private String name;
 
 	@NotNull(message = "価格を入力してください。")
@@ -34,7 +34,7 @@ public class ItemForm implements Serializable {
 	private Integer price;
 
 	@NotBlank(message = "商品説明を入力してください。")
-	@Size(max = 300,message = "商品説明は300文字以下で入力してください。")
+	@Size(max = 180,message = "商品説明は180文字以下で入力してください。")
 	private String description;
 
 	public void clear() {
